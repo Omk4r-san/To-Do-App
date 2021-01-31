@@ -31,6 +31,14 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
     }
   }
 
+  _submit() {
+    if (_formKey.currentState.validate()) {
+      _formKey.currentState.save();
+      print('$_title $_date $_priority');
+      Navigator.pop(context);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -65,7 +73,13 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                 Form(
                   key: _formKey,
                   child: Column(
-                    children: [textsection(), datesection(), prioritysection()],
+                    children: [
+                      textsection(),
+                      datesection(),
+                      prioritysection(),
+                      addbutton(),
+                      removebutton(),
+                    ],
                   ),
                 )
               ],
@@ -101,6 +115,7 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
       child: Padding(
         padding: EdgeInsets.symmetric(vertical: 18.0),
         child: DropdownButtonFormField(
+          isDense: true,
           icon: Icon(Icons.arrow_drop_down_circle),
           iconEnabledColor: Colors.red,
           iconSize: 22.0,
@@ -149,5 +164,41 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
         ),
       ),
     );
+  }
+
+  Widget addbutton() {
+    return Container(
+        margin: EdgeInsets.symmetric(vertical: 20.0),
+        height: 60.0,
+        width: double.infinity,
+        decoration: BoxDecoration(
+          color: Colors.red,
+          borderRadius: BorderRadius.circular(30.0),
+        ),
+        child: FlatButton(
+          child: Text(
+            "Add",
+            style: TextStyle(fontSize: 20.0),
+          ),
+          onPressed: _submit,
+        ));
+  }
+
+  Widget removebutton() {
+    return Container(
+        margin: EdgeInsets.symmetric(vertical: 20.0),
+        height: 60.0,
+        width: double.infinity,
+        decoration: BoxDecoration(
+          color: Colors.red,
+          borderRadius: BorderRadius.circular(30.0),
+        ),
+        child: FlatButton(
+          child: Text(
+            "Remove",
+            style: TextStyle(fontSize: 20.0),
+          ),
+          onPressed: _submit,
+        ));
   }
 }
