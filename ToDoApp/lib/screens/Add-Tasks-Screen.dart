@@ -17,6 +17,18 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
   TextEditingController _datecontroller = TextEditingController();
   DateFormat _dateFormat = DateFormat("MMM dd, yyyy ");
 
+  @override
+  void initState() {
+    super.initState();
+    _datecontroller.text = _dateFormat.format(_date);
+  }
+
+  @override
+  void dispose() {
+    _datecontroller.dispose();
+    super.dispose();
+  }
+
   _handledatepicker() async {
     final DateTime date = await showDatePicker(
         context: context,
@@ -46,7 +58,7 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
         onTap: () => FocusScope.of(context).unfocus(),
         child: SingleChildScrollView(
           child: Container(
-            padding: EdgeInsets.symmetric(horizontal: 40.0, vertical: 80.0),
+            padding: EdgeInsets.symmetric(horizontal: 40.0, vertical: 50.0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
@@ -97,10 +109,15 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
         child: TextFormField(
           style: TextStyle(fontSize: 18.0),
           decoration: InputDecoration(
-              labelText: "TItle",
-              labelStyle: TextStyle(fontSize: 18.0),
-              border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(10.0))),
+            labelText: "Title",
+            labelStyle: TextStyle(fontSize: 18.0, color: Colors.red),
+            focusedBorder: OutlineInputBorder(
+              borderSide: const BorderSide(color: Colors.red, width: 1.0),
+              borderRadius: BorderRadius.circular(10.0),
+            ),
+            border:
+                OutlineInputBorder(borderRadius: BorderRadius.circular(10.0)),
+          ),
           validator: (input) =>
               input.trim().isEmpty ? 'Please enter a tile ' : null,
           onSaved: (input) => _title = input,
